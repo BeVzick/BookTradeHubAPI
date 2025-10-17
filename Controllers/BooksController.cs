@@ -15,7 +15,7 @@ public class BooksController : ControllerBase
     {
         List<Book> books = BookData.Books;
 
-        if (field != null && value != null)
+        if (!string.IsNullOrWhiteSpace(field) && !string.IsNullOrWhiteSpace(value))
         {
             BookFields bookField;
             if (Enum.TryParse(field, out bookField))
@@ -62,6 +62,7 @@ public class BooksController : ControllerBase
 
         book.Title = updatedBook.Title;
         book.Author = updatedBook.Author;
+        book.Genre = updatedBook.Genre;
         if (book.OwnerId != updatedBook.OwnerId)
         {
             Student previousOwner = StudentData.Students.FirstOrDefault(s => s.Id == book.OwnerId);
