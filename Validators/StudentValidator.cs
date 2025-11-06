@@ -1,4 +1,4 @@
-﻿using BookTradeHubAPI.Models;
+﻿using BookTradeHubAPI.Models.Entity;
 using FluentValidation;
 
 namespace BookTradeHubAPI.Validators;

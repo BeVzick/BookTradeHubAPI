@@ -1,7 +1,7 @@
-﻿using BookTradeHubAPI.Models;
-using BookTradeHubAPI.Data;
+﻿using BookTradeHubAPI.Data;
 using BookTradeHubAPI.Enums;
 using Microsoft.AspNetCore.Mvc;
+using BookTradeHubAPI.Models.Entity;
 
 namespace BookTradeHubAPI.Controllers;
 

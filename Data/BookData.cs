@@ -1,5 +1,5 @@
-﻿using BookTradeHubAPI.Models;
-using BookTradeHubAPI.Enums;
+﻿using BookTradeHubAPI.Enums;
+using BookTradeHubAPI.Models.Entity;
 
 namespace BookTradeHubAPI.Data;
 

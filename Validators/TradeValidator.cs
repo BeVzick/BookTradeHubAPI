@@ -1,6 +1,6 @@
-﻿using BookTradeHubAPI.Models;
-using BookTradeHubAPI.Data;
+﻿using BookTradeHubAPI.Data;
 using FluentValidation;
+using BookTradeHubAPI.Models.Entity;
 
 namespace BookTradeHubAPI.Validators;
 
