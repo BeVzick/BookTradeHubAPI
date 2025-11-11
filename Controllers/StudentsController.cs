@@ -1,7 +1,7 @@
-﻿using BookTradeHubAPI.Data;
-using BookTradeHubAPI.Enums;
-using Microsoft.AspNetCore.Mvc;
-using BookTradeHubAPI.Models.Entity;
+﻿using Microsoft.AspNetCore.Mvc;
+using BookTradeHubAPI.Models.DTO.Get;
+using BookTradeHubAPI.Services;
+using BookTradeHubAPI.Models.DTO.Create;
 
 namespace BookTradeHubAPI.Controllers;
 
@@ -9,71 +9,64 @@ namespace BookTradeHubAPI.Controllers;
 [Route("api/[controller]")]
 public class StudentsController : ControllerBase
 {
-    [HttpGet]
-    public ActionResult<List<Student>> GetAll(string? field, string? value)
+    private readonly IStudentService _studentService;
+
+    public StudentsController(IStudentService studentService)
     {
-        List<Student> students = StudentData.Students;
+        _studentService = studentService;
+    }
 
-        if (field != null && value != null)
-        {
-            StudentFields studentField;
-            if (Enum.TryParse(field, out studentField))
-            {
-                students = studentField switch
-                {
-                    StudentFields.FirstName => students.FindAll(s => s.FirstName == value),
-                    StudentFields.LastName => students.FindAll(s => s.LastName == value),
-                    StudentFields.Age => students.FindAll(s => s.Age == Convert.ToInt32(value))
-                };
-            }
-        }
-
-        return Ok(students);
+    [HttpGet]
+    public async Task<ActionResult<List<StudentGetDto>>> GetAllAsync()
+    {
+        return Ok(await _studentService.GetAsync());
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Student> GetById(int id)
+    public async Task<ActionResult<StudentGetDto>> GetByIdAsync(string id)
     {
-        Student? student = StudentData.Students.FirstOrDefault(s => s.Id == id);
-        if (student is null)
+        try
+        {
+            return Ok(await _studentService.GetAsync(id));
+        }
+        catch (NullReferenceException)
+        {
             return NotFound();
-
-        return Ok(student);
+        }
     }
 
     [HttpPost]
-    public ActionResult<Student> Create(Student newStudent)
+    public async Task<ActionResult> CreateAsync(StudentCreateDto newStudent)
     {
-        newStudent.Id = StudentData.Students.Max(s => s.Id) + 1;
-        StudentData.Students.Add(newStudent);
-        return CreatedAtAction(nameof(GetById), new { id = newStudent.Id }, newStudent);
+        await _studentService.CreateAsync(newStudent);
+        return Created();
     }
 
     [HttpPut("{id}")]
-    public ActionResult<Student> Update(int id, Student updatedStudent)
+    public async Task<ActionResult<StudentGetDto>> UpdateAsync(string id, StudentCreateDto updatedStudent)
     {
-        Student? student = StudentData.Students.FirstOrDefault(s => s.Id == id);
-        if (student is null)
+        try
+        {
+            await _studentService.UpdateAsync(id, updatedStudent);
+            return (await _studentService.GetAsync(id));
+        }
+        catch (NullReferenceException)
+        {
             return NotFound();
-
-        student.FirstName = updatedStudent.FirstName;
-        student.LastName = updatedStudent.LastName;
-        student.Age = updatedStudent.Age;
-
-        return Ok(student);
+        }
     }
 
     [HttpDelete("{id}")]
-    public ActionResult Delete(int id)
+    public async Task<ActionResult> DeleteAsync(string id)
     {
-        Student? student = StudentData.Students.FirstOrDefault(s => s.Id == id);
-        if (student is null)
+        try
+        {
+            await _studentService.DeleteAsync(id);
+            return NoContent();
+        }
+        catch (NullReferenceException)
+        {
             return NotFound();
-
-        foreach (int bookId in student.BookIds)
-            BookData.Books.RemoveAll(b => b.Id == bookId);
-
-        StudentData.Students.Remove(student);
-        return NoContent();
+        }
     }
 }

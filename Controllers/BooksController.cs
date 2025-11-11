@@ -1,7 +1,7 @@
-﻿using BookTradeHubAPI.Data;
-using BookTradeHubAPI.Enums;
-using Microsoft.AspNetCore.Mvc;
-using BookTradeHubAPI.Models.Entity;
+﻿using Microsoft.AspNetCore.Mvc;
+using BookTradeHubAPI.Services;
+using BookTradeHubAPI.Models.DTO.Get;
+using BookTradeHubAPI.Models.DTO.Create;
 
 namespace BookTradeHubAPI.Controllers;
 
@@ -9,85 +9,77 @@ namespace BookTradeHubAPI.Controllers;
 [Route("api/[controller]")]
 public class BooksController : ControllerBase
 {
+    private readonly IBookService _bookService;
+
+    public BooksController(IBookService bookService)
+    {
+        _bookService = bookService;
+    }
+
 
     [HttpGet]
-    public ActionResult<List<Book>> GetAll(string? field, string? value)
+    public async Task<ActionResult<List<BookGetDto>>> GetAllAsync()
     {
-        List<Book> books = BookData.Books;
-
-        if (!string.IsNullOrWhiteSpace(field) && !string.IsNullOrWhiteSpace(value))
-        {
-            BookFields bookField;
-            if (Enum.TryParse(field, out bookField))
-            {
-                books = bookField switch
-                {
-                    BookFields.Title => books.FindAll(b => b.Title == value),
-                    BookFields.Author => books.FindAll(b => b.Author == value),
-                    BookFields.OwnerId => books.FindAll(b => b.OwnerId == Convert.ToInt32(value))
-                };
-            }
-        }
-
-        return Ok(books);
+        return Ok(await _bookService.GetAsync());
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Book> GetById(int id)
+    public async Task<ActionResult<BookGetDto>> GetByIdAsync(string id)
     {
-        Book? book = BookData.Books.FirstOrDefault(b => b.Id == id);
-
-        if (book is null)
+        try
+        {
+            return await _bookService.GetAsync(id);
+        }
+        catch (NullReferenceException)
+        {
             return NotFound();
-
-        return Ok(book);
+        }
     }
 
     [HttpPost]
-    public ActionResult<Book> Create(Book newBook)
+    public async Task<ActionResult> CreateAsync(BookCreateDto newBook)
     {
-        newBook.Id = BookData.Books.Max(b => b.Id) + 1;
-        BookData.Books.Add(newBook);
-        StudentData.Students.FirstOrDefault(s => s.Id == newBook.OwnerId).BookIds.Add(newBook.Id);
+        try
+        {
+            await _bookService.CreateAsync(newBook);
 
-        return CreatedAtAction(nameof(GetById), new { id = newBook.Id }, newBook);
+            return Created();
+        }
+        catch (ArgumentException e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 
     [HttpPut("{id}")]
-    public ActionResult<Book> Update(int id, Book updatedBook)
+    public async Task<ActionResult> UpdateAsync(string id, BookCreateDto updatedBook)
     {
-        Book? book = BookData.Books.FirstOrDefault(b => b.Id == id);
-        if (book is null)
-            return NotFound();
-
-        book.Title = updatedBook.Title;
-        book.Author = updatedBook.Author;
-        book.Genre = updatedBook.Genre;
-        if (book.OwnerId != updatedBook.OwnerId)
+        try
         {
-            Student previousOwner = StudentData.Students.FirstOrDefault(s => s.Id == book.OwnerId);
-            previousOwner.BookIds.Remove(book.Id);
-
-            Student newOwner = StudentData.Students.FirstOrDefault(s => s.Id == updatedBook.OwnerId);
-            newOwner.BookIds.Add(book.Id);
-
-            book.OwnerId = updatedBook.OwnerId;
+            await _bookService.UpdateAsync(id, updatedBook);
+            return Ok(await _bookService.GetAsync(id));
         }
-
-        return Ok(book);
+        catch (NullReferenceException)
+        {
+            return NotFound();
+        }
+        catch (ArgumentException e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 
     [HttpDelete("{id}")]
-    public ActionResult Delete(int id)
+    public async Task<ActionResult> DeleteAsync(string id)
     {
-        Book? book = BookData.Books.FirstOrDefault(b => b.Id == id);
-        if (book is null)
+        try
+        {
+            await _bookService.DeleteAsync(id);
+            return NoContent();
+        }
+        catch (NullReferenceException)
+        {
             return NotFound();
-
-        Student? owner = StudentData.Students.FirstOrDefault(s => s.Id == book.OwnerId);
-        owner.BookIds.Remove(book.Id);
-        BookData.Books.Remove(book);
-
-        return NoContent();
+        }
     }
 }

@@ -1,10 +1,9 @@
-﻿using BookTradeHubAPI.Data;
-using BookTradeHubAPI.Models.Entity;
+﻿using BookTradeHubAPI.Models.DTO.Create;
 using FluentValidation;
 
 namespace BookTradeHubAPI.Validators;
 
-public class BookValidator : AbstractValidator<Book>
+public class BookValidator : AbstractValidator<BookCreateDto>
 {
     public BookValidator()
     {
@@ -18,8 +17,6 @@ public class BookValidator : AbstractValidator<Book>
             .MaximumLength(100).WithMessage("Field 'Author' cannot be longer than 100 characters");
 
         RuleFor(b => b.OwnerId)
-            .NotEmpty().WithMessage("Filed 'OwnerId' is required")
-            .GreaterThanOrEqualTo(0).WithMessage("Filed 'OwnerId' cannot be negative")
-            .Must(id => StudentData.Students.Any(s => s.Id == id)).WithMessage($"Student doesn't exist");
+            .NotEmpty().WithMessage("Filed 'OwnerId' is required");
     }
 }

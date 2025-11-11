@@ -1,9 +1,9 @@
-﻿using BookTradeHubAPI.Models.Entity;
+﻿using BookTradeHubAPI.Models.DTO.Create;
 using FluentValidation;
 
 namespace BookTradeHubAPI.Validators;
 
-public class StudentValidator : AbstractValidator<Student>
+public class StudentValidator : AbstractValidator<StudentCreateDto>
 {
     public StudentValidator()
     {
@@ -20,8 +20,5 @@ public class StudentValidator : AbstractValidator<Student>
         RuleFor(s => s.Age)
             .NotEmpty().WithMessage("Field 'Age' is required")
             .InclusiveBetween(16, 100).WithMessage("Field 'Age' is not valid");
-
-        RuleFor(s => s.BookIds)
-            .Empty().WithMessage("Field 'BookIds' must be empty");
     }
 }

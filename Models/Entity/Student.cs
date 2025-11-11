@@ -7,17 +7,14 @@ public class Student
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string Id { get; set; } = default!;
+    public string Id { get; set; }
 
     [BsonElement("firstName")]
-    public string FirstName { get; set; } = default!;
+    public string FirstName { get; set; }
 
     [BsonElement("lastName")]
-    public string LastName { get; set; } = default!;
+    public string LastName { get; set; }
 
     [BsonElement("age")]
-    public int Age { get; set; } = default!;
-
-    [BsonElement("bookIds")]
-    public List<string> BookIds { get; set; } = default!;
+    public int Age { get; set; }
 }

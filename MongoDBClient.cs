@@ -19,5 +19,5 @@ public class MongoDBClient
         _db = client.GetDatabase("BookTradeHubDB");
     }
 
-    public IMongoCollection<T> GetCollection<T>(string name) => _db.GetCollection
+    public IMongoCollection<T> GetCollection<T>(string name) => _db.GetCollection<T>(name);
 }

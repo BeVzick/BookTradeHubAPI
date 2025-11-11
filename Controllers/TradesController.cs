@@ -1,7 +1,7 @@
-﻿using BookTradeHubAPI.Data;
-using BookTradeHubAPI.Enums;
-using Microsoft.AspNetCore.Mvc;
-using BookTradeHubAPI.Models.Entity;
+﻿using Microsoft.AspNetCore.Mvc;
+using BookTradeHubAPI.Services;
+using BookTradeHubAPI.Models.DTO.Get;
+using BookTradeHubAPI.Models.DTO.Create;
 
 namespace BookTradeHubAPI.Controllers;
 
@@ -9,60 +9,43 @@ namespace BookTradeHubAPI.Controllers;
 [Route("api/[controller]")]
 public class TradesController : ControllerBase
 {
-    [HttpGet]
-    public ActionResult<List<Trade>> GetAll(string? field, int? value)
+    private readonly ITradeService _tradeService;
+
+    public TradesController(ITradeService tradeService)
     {
-        List<Trade> trades = TradeData.Trades;
+        _tradeService = tradeService;
+    }
 
-        if (field != null && value != null)
-        {
-            TradeFields tradeField;
-            if (Enum.TryParse(field, out tradeField))
-            {
-                trades = tradeField switch
-                {
-                    TradeFields.Student1Id => trades.FindAll(t => t.Student1Id == value),
-                    TradeFields.Student2Id => trades.FindAll(t => t.Student2Id == value),
-                };
-            }
-        }
-
-        return Ok(trades);
+    [HttpGet]
+    public async Task<ActionResult<List<TradeGetDto>>> GetAllAsync()
+    {
+        return Ok(await _tradeService.GetAsync());
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Trade> GetById(int id)
+    public async Task<ActionResult<TradeGetDto>> GetByIdAsync(string id)
     {
-        Trade? trade = TradeData.Trades.FirstOrDefault(t => t.Id == id);
-        if (trade is null)
+        try
+        {
+            return Ok(await _tradeService.GetAsync(id));
+        }
+        catch (NullReferenceException)
+        {
             return NotFound();
-
-        return Ok(trade);
+        }
     }
 
     [HttpPost]
-    public ActionResult<Trade> Create(Trade newTrade)
+    public async Task<ActionResult> CreateAsync(TradeCreateDto newTrade)
     {
-        newTrade.Id = TradeData.Trades.Max(t => t.Id) + 1;
-        newTrade.Date = DateTime.Now;
-
-        Student student1 = StudentData.Students.FirstOrDefault(s => s.Id == newTrade.Student1Id);
-        Student student2 = StudentData.Students.FirstOrDefault(s => s.Id == newTrade.Student2Id);
-
-        newTrade.newStudent1BookIds.ForEach(item => {
-            Book book = BookData.Books.FirstOrDefault(b => b.Id == item);
-            book.OwnerId = student1.Id;
-            student2.BookIds.Remove(item);
-            student1.BookIds.Add(item);
-        });
-        newTrade.newStudent2BookIds.ForEach(item => {
-            Book book = BookData.Books.FirstOrDefault(b => b.Id == item);
-            book.OwnerId = student2.Id;
-            student1.BookIds.Remove(item);
-            student2.BookIds.Add(item);
-        });
-
-        TradeData.Trades.Add(newTrade);
-        return CreatedAtAction(nameof(GetById), new { id = newTrade.Id }, newTrade);
+        try
+        {
+            await _tradeService.CreateAsync(newTrade);
+            return Created();
+        }
+        catch (ArgumentException e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 }
