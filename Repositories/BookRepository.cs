@@ -7,8 +7,8 @@ public class BookRepository : IBookRepository
 {
     private readonly IMongoCollection<Book> _collection;
 
-    public BookRepository() =>
-        _collection = MongoDBClient.Instance.GetCollection<Book>("books");
+    public BookRepository(MongoDBClient client) =>
+        _collection = client.GetCollection<Book>("books");
 
     public async Task CreateAsync(Book book) =>
         await _collection.InsertOneAsync(book);

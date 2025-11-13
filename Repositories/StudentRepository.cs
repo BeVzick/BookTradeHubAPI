@@ -7,8 +7,8 @@ public class StudentRepository : IStudentRepository
 {
     private readonly IMongoCollection<Student> _collection;
 
-    public StudentRepository() => 
-        _collection = MongoDBClient.Instance.GetCollection<Student>("students");
+    public StudentRepository(MongoDBClient client) => 
+        _collection = client.GetCollection<Student>("students");
 
     public async Task CreateAsync(Student student) =>
         await _collection.InsertOneAsync(student);

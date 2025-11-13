@@ -9,13 +9,13 @@ namespace BookTradeHubAPI.Services;
 public class StudentService : IStudentService
 {
     private readonly IStudentRepository _studentRepo;
-    private readonly IBookService _bookService;
+    private readonly IBookRepository _bookRepo;
     private readonly IMapper _mapper;
 
-    public StudentService(IStudentRepository studentRepo, IBookService bookService, IMapper mapper)
+    public StudentService(IStudentRepository studentRepo, IBookRepository bookRepo, IMapper mapper)
     {
         _studentRepo = studentRepo;
-        _bookService = bookService;
+        _bookRepo = bookRepo;
         _mapper = mapper;
     }
 
@@ -26,7 +26,7 @@ public class StudentService : IStudentService
     {
         List<StudentGetDto> students = _mapper.Map<List<StudentGetDto>>(await _studentRepo.GetAllAsync());
         foreach (var student in students)
-            student.Books = await _bookService.GetByOwnerAsync(student.Id);
+            student.Books = _mapper.Map<List<BookGetDto>>(await _bookRepo.GetByOwnerIdAsync(student.Id));
 
         return students;
     }
@@ -38,7 +38,7 @@ public class StudentService : IStudentService
             throw new NullReferenceException($"Student with id:{id} doesn't exists");
 
         StudentGetDto getStudent = _mapper.Map<StudentGetDto>(student);
-        getStudent.Books = await _bookService.GetByOwnerAsync(student.Id);
+        getStudent.Books = _mapper.Map<List<BookGetDto>>(await _bookRepo.GetByOwnerIdAsync(student.Id));
 
         return getStudent;
     }

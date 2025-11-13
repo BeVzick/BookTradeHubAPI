@@ -1,22 +1,19 @@
-﻿using MongoDB.Driver;
+﻿using BookTradeHubAPI.Settings;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 
 namespace BookTradeHubAPI;
 
 public class MongoDBClient
 {
-    private static IMongoDatabase _db;
-    private static MongoDBClient _instanse;
+    private IMongoDatabase _db;
 
-    public static MongoDBClient Instance
+    public MongoDBClient(IOptions<MongoDBSettings> options)
     {
-        get => _instanse ?? new MongoDBClient();
-    }
-
-    private MongoDBClient()
-    {
-        var connectionString = "mongodb://localhost:27017";
+        var settings = options.Value;
+        var connectionString = settings.ConnectionString;
         var client = new MongoClient(connectionString);
-        _db = client.GetDatabase("BookTradeHubDB");
+        _db = client.GetDatabase(settings.DatabaseName);
     }
 
     public IMongoCollection<T> GetCollection<T>(string name) => _db.GetCollection<T>(name);
