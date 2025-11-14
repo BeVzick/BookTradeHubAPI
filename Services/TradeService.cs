@@ -29,34 +29,36 @@ public class TradeService : ITradeService
         if (await _studentService.GetAsync(trade.Student2Id) == null)
             throw new ArgumentException($"Student with id:{trade.Student2Id} doesn't exists");
 
-        List<BookGetDto> newStudent2Books = await _bookService.GetByOwnerAsync(trade.Student1Id);
-        if (!newStudent2Books.All(b => trade.newStudent2BookIds.Contains(b.Id)))
+        List<BookGetDto> student1Books = await _bookService.GetByOwnerAsync(trade.Student1Id);
+        if (!trade.newStudent2BookIds.All(bId => student1Books.Any(b => b.Id == bId)))
             throw new ArgumentException($"Student with id:{trade.Student1Id} doesn't have expected books");
 
-        List<BookGetDto> newStudent1Books = (await _bookService.GetByOwnerAsync(trade.Student2Id));
-        if (!newStudent1Books.All(b => trade.newStudent1BookIds.Contains(b.Id)))
+        List<BookGetDto> student2Books = (await _bookService.GetByOwnerAsync(trade.Student2Id));
+        if (!trade.newStudent1BookIds.All(bId => student2Books.Any(b => b.Id == bId)))
             throw new ArgumentException($"Student with id:{trade.Student2Id} doesn't have expected books");
 
         
-        for (int i = 0; i < newStudent1Books.Count; i++)
+        for (int i = 0; i < trade.newStudent1BookIds.Count; i++)
         {
-            BookCreateDto book = new BookCreateDto();
-            book.Title = newStudent1Books[i].Title;
-            book.Author = newStudent1Books[i].Author;
-            book.Genre = newStudent1Books[i].Genre;
-            book.OwnerId = trade.Student1Id;
+            BookGetDto bookGet = await _bookService.GetAsync(trade.newStudent1BookIds[i]);
+            BookCreateDto bookUpdate = new BookCreateDto();
+            bookUpdate.Title = bookGet.Title;
+            bookUpdate.Author = bookGet.Author;
+            bookUpdate.Genre = bookGet.Genre;
+            bookUpdate.OwnerId = trade.Student1Id;
 
-            await _bookService.UpdateAsync(newStudent1Books[i].Id, book);
+            await _bookService.UpdateAsync(bookGet.Id, bookUpdate);
         }
-        for (int i = 0; i < newStudent2Books.Count; i++)
+        for (int i = 0; i < trade.newStudent2BookIds.Count; i++)
         {
-            BookCreateDto book = new BookCreateDto();
-            book.Title = newStudent2Books[i].Title;
-            book.Author = newStudent2Books[i].Author;
-            book.Genre = newStudent2Books[i].Genre;
-            book.OwnerId = trade.Student2Id;
+            BookGetDto bookGet = await _bookService.GetAsync(trade.newStudent2BookIds[i]);
+            BookCreateDto bookUpdate = new BookCreateDto();
+            bookUpdate.Title = bookGet.Title;
+            bookUpdate.Author = bookGet.Author;
+            bookUpdate.Genre = bookGet.Genre;
+            bookUpdate.OwnerId = trade.Student2Id;
 
-            await _bookService.UpdateAsync(newStudent2Books[i].Id, book);
+            await _bookService.UpdateAsync(bookGet.Id, bookUpdate);
         }
 
         await _tradeRepo.CreateAsync(_mapper.Map<Trade>(trade));

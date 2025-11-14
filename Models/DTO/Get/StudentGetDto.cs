@@ -1,4 +1,6 @@
-﻿namespace BookTradeHubAPI.Models.DTO.Get;
+﻿using MongoDB.Bson.Serialization.Attributes;
+
+namespace BookTradeHubAPI.Models.DTO.Get;
 
 public class StudentGetDto
 {

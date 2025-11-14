@@ -19,6 +19,9 @@ public class StudentRepository : IStudentRepository
     public async Task<Student?> GetByIdAsync(string id) =>
         await (await _collection.FindAsync(s => s.Id == id)).FirstOrDefaultAsync();
 
+    public async Task<Student?> GetByEmailAsync(string email) =>
+        await (await _collection.FindAsync(s => s.Email == email)).FirstOrDefaultAsync();
+
     public async Task UpdateAsync(string id, Student student) =>
         await _collection.ReplaceOneAsync(s => s.Id == id, student);
 

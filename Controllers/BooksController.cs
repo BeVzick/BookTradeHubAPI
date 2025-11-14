@@ -2,11 +2,13 @@
 using BookTradeHubAPI.Services;
 using BookTradeHubAPI.Models.DTO.Get;
 using BookTradeHubAPI.Models.DTO.Create;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookTradeHubAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class BooksController : ControllerBase
 {
     private readonly IBookService _bookService;

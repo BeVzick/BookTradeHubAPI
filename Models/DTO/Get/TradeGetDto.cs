@@ -2,7 +2,7 @@
 
 public class TradeGetDto
 {
-    public int Id { get; set; }
+    public string Id { get; set; }
     public DateTime Date { get; set; }
     public StudentGetDto Student1 { get; set; }
     public StudentGetDto Student2 { get; set; }

@@ -2,11 +2,14 @@
 using BookTradeHubAPI.Models.DTO.Get;
 using BookTradeHubAPI.Services;
 using BookTradeHubAPI.Models.DTO.Create;
+using BookTradeHubAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookTradeHubAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class StudentsController : ControllerBase
 {
     private readonly IStudentService _studentService;
@@ -35,11 +38,33 @@ public class StudentsController : ControllerBase
         }
     }
 
-    [HttpPost]
+    [HttpPost("register")]
+    [AllowAnonymous]
     public async Task<ActionResult> CreateAsync(StudentCreateDto newStudent)
     {
-        await _studentService.CreateAsync(newStudent);
+        try
+        {
+            await _studentService.CreateAsync(newStudent);
+        }
+        catch (InvalidOperationException e)
+        {
+            return BadRequest(e.Message);
+        }
         return Created();
+    }
+
+    [HttpPost("login")]
+    [AllowAnonymous]
+    public async Task<ActionResult> Login(LoginModel model)
+    {
+        try
+        {
+            return Ok(await _studentService.Login(model));
+        }
+        catch (InvalidOperationException)
+        {
+            return Unauthorized("Email or password is wrong");
+        }
     }
 
     [HttpPut("{id}")]

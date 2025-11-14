@@ -17,4 +17,10 @@ public class Student
 
     [BsonElement("age")]
     public int Age { get; set; }
+
+    [BsonElement("email")]
+    public string Email { get; set; }
+
+    [BsonElement("passwordHash")]
+    public string Password { get; set; }
 }
