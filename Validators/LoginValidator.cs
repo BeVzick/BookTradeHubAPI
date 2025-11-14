@@ -9,7 +9,7 @@ namespace BookTradeHubAPI.Validators
         {
             RuleFor(l => l.Email)
                 .NotEmpty().WithMessage("Email is required")
-                .EmailAddress();
+                .EmailAddress().WithMessage("Email is not valid");
             RuleFor(l => l.Password)
                 .NotEmpty().WithMessage("Password is required");
         }
