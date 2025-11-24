@@ -26,8 +26,8 @@ jobs:
         working-directory: ./BookTradeHubAPI/
 
       - name: Run tests
-        run: dotnet test --configuration Release --no-build --verbosity normal  
-        working-directory: ./UnitTestProject/
+        run: dotnet test ./UnitTestProject/UnitTestProject.csproj 
+        # --configuration Release --no-build --verbosity normal  
 
       - name: Install Railway CLI
         run: npm i -g @railway/cli
