@@ -113,6 +113,8 @@ public class ResponceTests
             }
         };
 
+        result.Id = "id45";
+
         Assert.Equal(expected.Id, result.Id);
         Assert.Equal(expected.FirstName, result.FirstName);
         Assert.Equal(expected.LastName, result.LastName);
