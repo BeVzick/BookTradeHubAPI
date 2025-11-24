@@ -12,6 +12,8 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+
 builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDbSettings"));
 builder.Services.Configure<JWTSettings>(builder.Configuration.GetSection("JWTSettings"));
 builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
@@ -26,6 +28,7 @@ builder.Services.AddScoped<ITradeRepository, TradeRepository>();
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ITradeService, TradeService>();
+builder.Services.AddScoped<IRefreshRepository, RefreshRepository>();
 builder.Services.AddFluentValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<BookValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<StudentValidator>();
@@ -81,6 +84,11 @@ builder.Services.AddAuthentication(options =>
         ValidAudience = jwtSettings["Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]))
     };
+});
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(Int32.Parse(port));
 });
 
 var app = builder.Build();

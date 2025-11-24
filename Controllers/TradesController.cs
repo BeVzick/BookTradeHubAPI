@@ -3,6 +3,7 @@ using BookTradeHubAPI.Services;
 using BookTradeHubAPI.Models.DTO.Get;
 using BookTradeHubAPI.Models.DTO.Create;
 using Microsoft.AspNetCore.Authorization;
+using BookTradeHubAPI.Enums;
 
 namespace BookTradeHubAPI.Controllers;
 
@@ -19,12 +20,14 @@ public class TradesController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<List<TradeGetDto>>> GetAllAsync()
     {
         return Ok(await _tradeService.GetAsync());
     }
 
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<ActionResult<TradeGetDto>> GetByIdAsync(string id)
     {
         try
@@ -38,6 +41,7 @@ public class TradesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = $"{nameof(Roles.Manager)},{nameof(Roles.Admin)}")]
     public async Task<ActionResult> CreateAsync(TradeCreateDto newTrade)
     {
         try

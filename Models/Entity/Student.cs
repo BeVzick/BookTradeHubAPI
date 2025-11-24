@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using BookTradeHubAPI.Enums;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace BookTradeHubAPI.Models.Entity;
@@ -23,4 +24,7 @@ public class Student
 
     [BsonElement("passwordHash")]
     public string Password { get; set; }
+
+    [BsonElement("role")]
+    public Roles Role { get; set; } = Roles.Student;
 }

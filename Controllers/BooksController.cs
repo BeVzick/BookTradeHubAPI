@@ -8,7 +8,6 @@ namespace BookTradeHubAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
 public class BooksController : ControllerBase
 {
     private readonly IBookService _bookService;
@@ -20,12 +19,14 @@ public class BooksController : ControllerBase
 
 
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<List<BookGetDto>>> GetAllAsync()
     {
         return Ok(await _bookService.GetAsync());
     }
 
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<ActionResult<BookGetDto>> GetByIdAsync(string id)
     {
         try
@@ -39,6 +40,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult> CreateAsync(BookCreateDto newBook)
     {
         try
@@ -54,6 +56,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<ActionResult> UpdateAsync(string id, BookCreateDto updatedBook)
     {
         try
@@ -72,6 +75,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<ActionResult> DeleteAsync(string id)
     {
         try
