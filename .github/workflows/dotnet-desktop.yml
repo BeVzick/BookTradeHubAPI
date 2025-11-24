@@ -18,8 +18,7 @@ jobs:
           dotnet-version: 9.0.x
 
       - name: Restore dependencies
-        run: dotnet restore
-        working-directory: ./BookTradeHubAPI/BookTradeHubAPI.cproj
+        run: dotnet restore ./BookTradeHubAPI/BookTradeHubAPI.cproj
 
       - name: Build
         run: dotnet build --configuration Release --no-restore
