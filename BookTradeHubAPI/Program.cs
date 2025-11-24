@@ -47,7 +47,7 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "bearer",
         BearerFormat = "JWT",
         In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-        Description = "Ââåä³òü òîêåí ó ôîðìàò³: Bearer {òîêåí}"
+        Description = "Ã‚Ã¢Ã¥Ã¤Â³Ã²Ã¼ Ã²Ã®ÃªÃ¥Ã­ Ã³ Ã´Ã®Ã°Ã¬Ã Ã²Â³: Bearer {Ã²Ã®ÃªÃ¥Ã­}"
     });
 
     c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
@@ -93,11 +93,8 @@ builder.WebHost.ConfigureKestrel(options =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
