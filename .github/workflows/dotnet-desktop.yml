@@ -19,15 +19,15 @@ jobs:
 
       - name: Restore dependencies
         run: dotnet restore
-        working-directory: ./BookTradeHubAPI
+        working-directory: ./BookTradeHubAPI/
 
       - name: Build
         run: dotnet build --configuration Release --no-restore
         working-directory: ./BookTradeHubAPI/
 
-      # - name: Run tests # Доданий крок для запуску тестів
-        # run: dotnet test --configuration Release --no-build --verbosity normal  
-        # working-directory: ./BookTradeHubAPI/
+      - name: Run tests # Доданий крок для запуску тестів
+        run: dotnet test --configuration Release --no-build --verbosity normal  
+        working-directory: ./UnitTestProject/
 
       - name: Install Railway CLI
         run: npm i -g @railway/cli
