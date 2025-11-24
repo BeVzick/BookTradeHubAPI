@@ -5,6 +5,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{ADEFEC44-27D2-C888-B879-401F188E0A46}|UnitTestProject.csproj|c:\\projects\\booktradehubproject\\unittestproject\\tests\\responcetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{ADEFEC44-27D2-C888-B879-401F188E0A46}|UnitTestProject.csproj|solutionrelative:tests\\responcetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ADEFEC44-27D2-C888-B879-401F188E0A46}|UnitTestProject.csproj|c:\\projects\\booktradehubproject\\unittestproject\\unittestproject.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{ADEFEC44-27D2-C888-B879-401F188E0A46}|UnitTestProject.csproj|solutionrelative:unittestproject.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,13 +42,26 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UnitTestProject",
+              "DocumentMoniker": "C:\\Projects\\BookTradeHubProject\\UnitTestProject\\UnitTestProject.csproj",
+              "RelativeDocumentMoniker": "UnitTestProject.csproj",
+              "ToolTip": "C:\\Projects\\BookTradeHubProject\\UnitTestProject\\UnitTestProject.csproj",
+              "RelativeToolTip": "UnitTestProject.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-11-24T12:57:06.516Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "ResponceTests.cs",
               "DocumentMoniker": "C:\\Projects\\BookTradeHubProject\\UnitTestProject\\Tests\\ResponceTests.cs",
               "RelativeDocumentMoniker": "Tests\\ResponceTests.cs",
               "ToolTip": "C:\\Projects\\BookTradeHubProject\\UnitTestProject\\Tests\\ResponceTests.cs",
               "RelativeToolTip": "Tests\\ResponceTests.cs",
-              "ViewState": "AgIAAFcAAAAAAAAAAAAYwHMAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAAF8AAAAAAAAAAAAewHEAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-24T12:51:49.815Z",
               "EditorCaption": ""

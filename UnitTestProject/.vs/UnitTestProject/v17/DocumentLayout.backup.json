@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Projects\\BookTradeHubProject\\UnitTestProject\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{ADEFEC44-27D2-C888-B879-401F188E0A46}|UnitTestProject.csproj|c:\\projects\\booktradehubproject\\unittestproject\\unittestproject.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{ADEFEC44-27D2-C888-B879-401F188E0A46}|UnitTestProject.csproj|solutionrelative:unittestproject.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{ADEFEC44-27D2-C888-B879-401F188E0A46}|UnitTestProject.csproj|c:\\projects\\booktradehubproject\\unittestproject\\tests\\responcetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{ADEFEC44-27D2-C888-B879-401F188E0A46}|UnitTestProject.csproj|solutionrelative:tests\\responcetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -14,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -37,18 +41,27 @@
               "Name": "ST:0:0:{de1fc918-f32e-4dd7-a915-1792a051f26b}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UnitTestProject",
+              "DocumentMoniker": "C:\\Projects\\BookTradeHubProject\\UnitTestProject\\UnitTestProject.csproj",
+              "RelativeDocumentMoniker": "UnitTestProject.csproj",
+              "ToolTip": "C:\\Projects\\BookTradeHubProject\\UnitTestProject\\UnitTestProject.csproj",
+              "RelativeToolTip": "UnitTestProject.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-11-24T12:57:06.516Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "ResponceTests.cs",
               "DocumentMoniker": "C:\\Projects\\BookTradeHubProject\\UnitTestProject\\Tests\\ResponceTests.cs",
               "RelativeDocumentMoniker": "Tests\\ResponceTests.cs",
               "ToolTip": "C:\\Projects\\BookTradeHubProject\\UnitTestProject\\Tests\\ResponceTests.cs",
               "RelativeToolTip": "Tests\\ResponceTests.cs",
-              "ViewState": "AgIAAFcAAAAAAAAAAAAYwHMAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHMAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-24T12:51:49.815Z",
               "EditorCaption": ""
