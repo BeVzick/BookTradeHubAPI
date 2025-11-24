@@ -19,7 +19,7 @@ jobs:
 
       - name: Restore dependencies
         run: dotnet restore .csproj
-        working-directory: ./BookTradeHubAPI/
+        working-directory: ./BookTradeHubAPI/BookTradeHubAPI.csproj
 
       - name: Build
         run: dotnet build --configuration Release --no-restore
